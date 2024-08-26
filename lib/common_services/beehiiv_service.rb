@@ -29,10 +29,11 @@ class BeehiivService < BaseApiService
       end
     end
 
-    def create_subscription(user, source: 'signup')
+    def create_subscription(user, source: 'signup', send_welcome_email: false)
       response = post_request(path: "publications/#{PUBLICATION_ID}/subscriptions", parameters: {
                                 email: user[:email],
-                                utm_source: source
+                                utm_source: source,
+                                send_welcome_email: send_welcome_email
                               })
       parsed_response = Hashie::Mash.new(JSON.parse(response))
       # https://developers.beehiiv.com/docs/v2/1a77a563675ee-create#Responses
